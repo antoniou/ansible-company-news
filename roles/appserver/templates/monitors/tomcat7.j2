@@ -1,0 +1,5 @@
+check host tomcat7 with address {{ tomcat_host }}
+ stop program = "/etc/init.d/tomcat7 stop"
+ start program = "/etc/init.d/tomcat7 restart"
+ if failed port {{ tomcat_http_port }} and protocol http
+ then start

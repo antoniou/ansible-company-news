@@ -1,0 +1,36 @@
+---
+- name: Install Monit
+  apt: name=monit state=present update_cache=yes cache_valid_time=3600
+  when: ansible_os_family == "Debian"
+  tags: monit
+
+- name: Setup webinterface
+  template: src=webinterface.j2 dest=/etc/monit/conf.d/webinterface owner=root group=root
+  notify: restart monit
+  tags: monit
+
+- name: Add RW group
+  group: name={{ monit_webinterface_rw_group }} state=present
+  when: monit_webinterface_enabled and monit_webinterface_rw_group is defined
+  tags: monit
+
+- name: Add R group
+  group: name={{ monit_webinterface_r_group }} state=present
+  when: monit_webinterface_enabled and monit_webinterface_r_group is defined
+  tags: monit
+
+- name: Setup mail alerts
+  copy: src=monit_mail dest=/etc/monit/conf.d/mail owner=root group=root
+  notify: restart monit
+  when: monit_mail_enabled
+  tags: monit
+
+- name: Setup system monitor
+  copy: src=monit_system dest=/etc/monit/conf.d/system owner=root group=root
+  notify: restart monit
+  when: monit_mail_enabled
+  tags: monit
+
+- name: restart monit
+  service: name=monit state=restarted
+  tags: monit

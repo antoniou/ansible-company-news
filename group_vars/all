@@ -1,0 +1,12 @@
+# The global variable file CompanyNews App installation
+
+# Application  Server configuration
+codebase_url: https://s3-eu-west-1.amazonaws.com/codebase.companynews/companyNews.war
+codebase_sha256: ced53c3280d0b358d52a969ae8012ab6e86220bd805a14e693660595089d5c31
+prevayler_path: /home/russell/persistence/files\*
+tomcat_http_port: 8080
+
+# Web Server Configuration
+static_files_url: https://s3-eu-west-1.amazonaws.com/codebase.companynews/static.zip
+static_files_sha256: 04390b97da3ad2e218eefa0f42fd2a23b4f69cd889a59b06f617167cb5ceb6b5
+nginx_http_port: 80

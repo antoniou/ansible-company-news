@@ -1,0 +1,9 @@
+---
+- name: Remove placeholders
+  shell: rm -rf {{nginx_www_dir}}/*
+
+- name: Download static files
+  get_url: url={{ static_files_url }} dest=/tmp/static.zip sha256sum={{ static_files_sha256 }} owner=www-data group=www-data mode=0440
+
+- name: Unarchive static files
+  unarchive: src=/tmp/static.zip dest={{ nginx_www_dir }} copy=no

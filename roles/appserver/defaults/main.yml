@@ -1,0 +1,10 @@
+---
+  monit_services: [ tomcat7 ]
+
+  tomcat_http_port: 8080
+  tomcat_https_port: 8443
+  tomcat_host: 127.0.0.1
+  tomcat_appBase: /var/lib/tomcat7/webapps
+
+  tomcat_admin_username: admin
+  tomcat_admin_password: admin

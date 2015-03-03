@@ -1,0 +1,31 @@
+---
+- name: Install Tomcat 7
+  apt: name=tomcat7 state=present update_cache=yes cache_valid_time=3600
+  tags: tomcat
+
+- name: Write Tomcat monitor
+  template: src=monitors/{{ item }}.j2 dest=/etc/monit/conf.d/{{ item }} owner=root group=root
+  with_items: monit_services
+  notify: restart tomcat
+  tags: tomcat
+
+- name: Modify tomcat server
+  template: src=server.xml.j2 dest=/etc/tomcat7/server.xml owner=root group=tomcat7 mode=0644
+  notify: restart tomcat
+  tags: tomcat
+
+- name: Configure Tomcat users
+  template: src=tomcat-users.xml dest=/etc/tomcat7/tomcat-users.xml owner=root group=tomcat7 mode=0640
+  notify: restart tomcat
+
+# - name: Start Tomcat
+#   monit: name=tomcat7 state=monitored
+#   tags: tomcat
+
+# - name: deploy iptables rules
+#   template: src=iptables-save dest=/etc/sysconfig/iptables
+#   notify: restart iptables
+
+- name: Wait for tomcat to start
+  wait_for: port={{tomcat_http_port}}
+  tags: tomcat

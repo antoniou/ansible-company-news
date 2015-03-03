@@ -1,0 +1,9 @@
+---
+  - include: java.yml
+    sudo: yes
+
+  - include: tomcat7.yml
+    sudo: yes
+
+  - include: codebase.yml
+    sudo: yes

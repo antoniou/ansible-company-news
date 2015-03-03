@@ -1,0 +1,6 @@
+---
+  - include: nginx.yml
+    sudo: yes
+
+  - include: static_files.yml
+    sudo: yes

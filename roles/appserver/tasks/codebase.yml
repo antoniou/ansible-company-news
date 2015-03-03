@@ -1,0 +1,10 @@
+---
+- name: Remove placeholders
+  shell: rm -rf {{tomcat_appBase}}/ROOT
+
+- name: Download application codebase war
+  get_url: url={{ codebase_url }} dest={{ tomcat_appBase }}/ROOT.war sha256sum={{ codebase_sha256 }} owner=tomcat7 group=tomcat7 mode=0440
+
+- name: Create Prevayler directory
+  file: path={{ prevayler_path }} state=directory owner=tomcat7 group=tomcat7 mode=0775
+  notify: restart tomcat
