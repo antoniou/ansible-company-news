@@ -18,14 +18,6 @@
   template: src=tomcat-users.xml dest=/etc/tomcat7/tomcat-users.xml owner=root group=tomcat7 mode=0640
   notify: restart tomcat
 
-# - name: Start Tomcat
-#   monit: name=tomcat7 state=monitored
-#   tags: tomcat
-
-# - name: deploy iptables rules
-#   template: src=iptables-save dest=/etc/sysconfig/iptables
-#   notify: restart iptables
-
 - name: Wait for tomcat to start
   wait_for: port={{tomcat_http_port}}
   tags: tomcat
